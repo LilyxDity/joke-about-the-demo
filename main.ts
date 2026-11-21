@@ -1,12 +1,15 @@
-// joke-about-the-demo: writes a one-line joke about working beside AI coding
-// agents to /output/entry.txt (make.fun entry for "The joke about the demo").
-// No network, deterministic. One line, no trailing newline.
-import { mkdirSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+// joke-about-the-demo: a tiny program that writes a one-line joke about
+// working beside AI coding agents to /output/entry.txt, for make.fun's
+// "The joke about the demo" bounty. No network, deterministic output.
+import { mkdirSync } from "node:fs";
+import { writeFileSync } from "node:fs";
+import { join as joinPath } from "node:path";
 
-const JOKE =
+const JOKE_TEXT =
   "Our agent demoed perfectly in rehearsal, then crashed in front of the whole room. Its post-mortem: 'works on my machine.' It doesn't have a machine.";
 
-const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
-mkdirSync(outDir, { recursive: true });
-writeFileSync(join(outDir, "entry.txt"), JOKE, "utf8");
+const outDir = process.env["MAKEFUN_OUTPUT_DIR"] ?? "/output";
+const entryPath = joinPath(outDir, "entry.txt");
+const dirOptions = { recursive: true };
+mkdirSync(outDir, dirOptions);
+writeFileSync(entryPath, JOKE_TEXT, "utf8");
